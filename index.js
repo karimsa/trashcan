@@ -25,9 +25,6 @@ var rc = require('rc')
         }
       }
 
-      /**
-       * @memberof Handler
-       */
       handle.exec = function () {
         try {
           fn.apply(context, arguments)
@@ -42,7 +39,7 @@ var rc = require('rc')
 
       /**
        * Attach an event listener.
-       * @memberof trashcan
+       * @public
        * @method on
        * @params {String} event - the event to attach to
        * @params {Function} callback - an event handler
@@ -54,7 +51,7 @@ var rc = require('rc')
 
       /**
        * Detach an event listener.
-       * @memberof trashcan
+       * @public
        * @method off
        * @params {String} event - the event to detach from
        * @params {Function} callback - an event handler
@@ -66,7 +63,7 @@ var rc = require('rc')
 
       /**
        * Emit an event.
-       * @memberof trashcan
+       * @public
        * @method emit
        * @params {String} event - the event to emit
        * @params {Variant} data - some data to pass
@@ -78,21 +75,18 @@ var rc = require('rc')
 
       /**
        * Expand an error into its full form (with extra details).
-       * @memberof trashcan
+       * @public
        * @method full
        * @params {String} error - an error message
        * @returns {String} message - an expanded error message
        */
     , full: function (error) {
-        return JSON.stringify({
-            error: error
-          , freemem: 0
-        }, null, 2)
+        return JSON.stringify(error, null, 2)
       }
 
       /**
        * Throw an error safely.
-       * @memberof trashcan
+       * @public
        * @method throw
        * @params {Error|String} error - the error to throw
        */
@@ -103,7 +97,7 @@ var rc = require('rc')
 
       /**
        * Create a callback for logging errors to a file.
-       * @memberof trashcan
+       * @public
        * @method log
        * @params {String} filename - the file to log to
        * @returns {Function} callback - the callback to aattach to the error event
@@ -121,7 +115,7 @@ var rc = require('rc')
 
       /**
        * Create a callback for sending errors as emails.
-       * @memberof trashcan
+       * @public
        * @method notify
        * @params {Array|String} email(s) - the email address(es) to notify
        * @returns {Function} callback - the callback to attach to the error event
@@ -154,7 +148,7 @@ var rc = require('rc')
 
       /**
        * Handle rejections of a promise.
-       * @memberof trashcan
+       * @public
        * @method swear
        * @params {Promise} promise - a promise object work handle for
        * @params {Function} callback - a success callback to execute on resolution
@@ -166,7 +160,7 @@ var rc = require('rc')
 
       /**
        * Catch all error events of an emitter.
-       * @memberof trashcan
+       * @public
        * @method catch
        * @params {EventEmitter} emitter - the event emitter/object to catch errors from
        */
