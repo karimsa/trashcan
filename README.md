@@ -13,9 +13,14 @@ Install via npm (`npm install --save trashcan`) and then take advantage of the A
 Aside from the auto-catching `uncaughtException` events on `process`, trashcan is useful for making sure the exception doesn't get that far.
 Use it in your code to not worry about errors in every callback you make.
 
+*Unless otherwise specified, all trashcan methods should be chainable. So you can do a lot of error handling at once, if you wish. For a more
+detailed spec, see [the github page](https://ohdb.github.io/trashcan).*
+
  - [Error Handling](#error-handling)
  - [Asynchronous Callback Errors](#asynchronous-callbacks)
  - [Synchronous Errors](#synchronous-errors)
+ - [Error Events](#error-events)
+ - [Promise Rejections](#promise-rejections)
  - [Custom Errors](#custom-errors)
 
 ### Error Handling
@@ -60,6 +65,30 @@ tc(function () {
 
   // handle file data
 }).exec()
+```
+
+### Error Events
+
+```javascript
+var tc = require('trashcan')
+  , http = require('http').Server(function () { /* server logic */ })
+
+// grab all errors from the server
+tc.catch(http)
+```
+
+### Promise Rejections
+
+```javascript
+var tc = require('trashcan')
+
+// grab your promise, however
+var promise = require('q').defer()
+
+// pass it forwards
+tc.swear(promise, function ( /* arguments */ ) {
+  // handle success
+})
 ```
 
 ### Custom Errors
