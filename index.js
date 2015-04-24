@@ -147,6 +147,19 @@ var rc = require('rc')
           return self
         })
       }
+
+      /**
+       * Handle rejections of a promise.
+       * @memberof trashcan
+       * @method swear
+       * @params {Promise} promise - a promise object work handle for
+       * @params {Function} callback - a success callback to execute on resolution
+       * @returns {Promise} promise - the original promise
+       */
+    , swear: function (promise, success) {
+        return promise.then(success, tc.throw)
+      }
+
     }
   , i
 
