@@ -6,9 +6,12 @@ Safe error handling in production mode.
 
 ## Usage
 
-Install via npm (`npm install --save trashcan`) and then take advantage of the API to .
+Install via npm (`npm install --save trashcan`) and then take advantage of the API to catch and handle errors.
 
 ## Table of Contents
+
+Aside from the auto-catching `uncaughtException` events on `process`, trashcan is useful for making sure the exception doesn't get that far.
+Use it in your code to not worry about errors in every callback you make.
 
  - [Error Handling](#error-handling)
  - [Asynchronous Callback Errors](#asynchronous-callbacks)
@@ -31,6 +34,9 @@ tc.on('error', tc.notify('me@email.com'))
 // or to a server log
 tc.on('error', tc.log('./server.log'))
 ```
+
+*tc.notify() uses nodemailer in the background, and can either be passed nodemailer transport configuration as the second argument or that
+configuration can be saved into a file called `.mailrc` in your project folder.*
 
 ### Asynchronous Callback Errors
 

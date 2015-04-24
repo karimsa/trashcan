@@ -150,6 +150,11 @@ var rc = require('rc')
     }
   , i
 
+// also handle uncaught exceptions
+process.on('uncaughtException', function (error) {
+  tc.throw(error)
+})
+
 // expand prototype onto function
 for (i in prototype) {
   if (prototype.hasOwnProperty(i)) {
