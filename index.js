@@ -48,7 +48,8 @@ var rc = require('rc')
        * @params {Function} callback - an event handler
        */
       on: function () {
-        return events.on.apply(events, arguments)
+        events.on.apply(events, arguments)
+        return tc
       }
 
       /**
@@ -59,7 +60,8 @@ var rc = require('rc')
        * @params {Function} callback - an event handler
        */
     , off: function () {
-        return events.off.apply(events, arguments)
+        events.off.apply(events, arguments)
+        return tc
       }
 
       /**
@@ -70,7 +72,8 @@ var rc = require('rc')
        * @params {Variant} data - some data to pass
        */
     , emit: function () {
-        return events.emit.apply(events, arguments)
+        events.emit.apply(events, arguments)
+        return tc
       }
 
       /**
@@ -94,7 +97,8 @@ var rc = require('rc')
        * @params {Error|String} error - the error to throw
        */
     , throw: function (error) {
-        return this.emit('error', error)
+        this.emit('error', error)
+        return tc
       }
 
       /**
@@ -154,10 +158,10 @@ var rc = require('rc')
        * @method swear
        * @params {Promise} promise - a promise object work handle for
        * @params {Function} callback - a success callback to execute on resolution
-       * @returns {Promise} promise - the original promise
        */
     , swear: function (promise, success) {
-        return promise.then(success, tc.throw)
+        promise.then(success, tc.throw)
+        return tc
       }
 
       /**
@@ -165,7 +169,6 @@ var rc = require('rc')
        * @memberof trashcan
        * @method catch
        * @params {EventEmitter} emitter - the event emitter/object to catch errors from
-       * @returns {Object} trashcan - for chaining
        */
     , catch: function (emitter) {
         emitter.on('error', tc.throw)
