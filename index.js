@@ -160,6 +160,18 @@ var rc = require('rc')
         return promise.then(success, tc.throw)
       }
 
+      /**
+       * Catch all error events of an emitter.
+       * @memberof trashcan
+       * @method catch
+       * @params {EventEmitter} emitter - the event emitter/object to catch errors from
+       * @returns {Object} trashcan - for chaining
+       */
+    , catch: function (emitter) {
+        emitter.on('error', tc.throw)
+        return tc
+      }
+
     }
   , i
 
