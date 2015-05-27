@@ -12,7 +12,7 @@ var rc = require('rc')
   , events = new (require('events').EventEmitter)
   , nodemailer = require('nodemailer')
   , timestamp = function (msg) {
-      return '[' + (new Date) + '] ' + msg
+      return '[' + (new Date) + '] ' + String(msg)
     }
   , tc = function (fn, context) {
       context = context || tc
@@ -38,6 +38,8 @@ var rc = require('rc')
       return handle
     }
   , prototype = {
+
+      title: null,
 
       /**
        * Attach an event listener.
@@ -76,17 +78,6 @@ var rc = require('rc')
       }
 
       /**
-       * Expand an error into its full form (with extra details).
-       * @public
-       * @method full
-       * @params {String} error - an error message
-       * @returns {String} message - an expanded error message
-       */
-    , full: function (error) {
-        return JSON.stringify(error, null, 2)
-      }
-
-      /**
        * Throw an error safely.
        * @public
        * @method throw
@@ -110,7 +101,7 @@ var rc = require('rc')
 
         /** simply append all error info to the file */
         return (self = function (error) {
-          fs.appendFile(filename, timestamp(tc.full(error)) + '\n')
+          fs.appendFile(filename, timestamp(error) + '\n')
           return self
         })
       }
@@ -139,9 +130,9 @@ var rc = require('rc')
           transport.sendMail({
               to: emails
             , from: config.auth.user
-            , subject: String(error)
-            , text: tc.full(error)
-            , html: '<code><pre>' + tc.full(error) + '</pre></code>'
+            , subject: tc.title || String(error)
+            , text: String(error)
+            , html: '<code><pre>' + String(error) + '</pre></code>'
           })
   
           return self
