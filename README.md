@@ -64,7 +64,11 @@ tc(function () {
   var data = fs.readFileSync('./my-file.txt', 'utf8')
 
   // handle file data
-}).exec()
+}).exec(function (err) {
+  // optional error handler
+  // (error will be thrown through trashcan
+  //  before this function is called)
+})
 ```
 
 ### Error Events
