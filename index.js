@@ -26,12 +26,12 @@ var rc = require('rc')
         }
       }
 
-      handle.exec = function (fn) {
+      handle.exec = function (cb) {
         try {
           fn.apply(context, arguments)
         } catch (error) {
           tc.throw(error)
-          if (typeof fn === 'function') fn(error)
+          if (typeof cb === 'function') cb(error)
         }
       }
 
