@@ -8,6 +8,7 @@
 "use strict";
 
 var rc = require('rc')
+  , fs = require('fs')
   , events = new (require('events').EventEmitter)
   , nodemailer = require('nodemailer')
   , timestamp = function (msg) {
