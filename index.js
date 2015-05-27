@@ -31,7 +31,7 @@ var rc = require('rc')
           fn.apply(context, arguments)
         } catch (error) {
           tc.throw(error)
-          fn(error)
+          if (typeof fn === 'function') fn(error)
         }
       }
 
