@@ -9,6 +9,8 @@
 
 var rc = require('rc')
   , fs = require('fs')
+  , request = require('request')
+  , querystring = require('querystring')
   , events = new (require('events').EventEmitter)
   , nodemailer = require('nodemailer')
   , timestamp = function (msg) {
@@ -118,14 +120,14 @@ var rc = require('rc')
 
         return (self = function (error) {
             request({
-                url: 'https://' + options.username + ':' + options.password + '@bitbucket.org/api/1.0/repositories/' + options.repo + '/issues/',
+                url: 'https://' + encodeURIComponent(options.username) + ':' + encodeURIComponent(options.password) + '@bitbucket.org/api/1.0/repositories/' + options.repo + '/issues/',
                 method: 'POST',
-                body: {
-                  status: 'open',
+                body: querystring.encode({
+                  status: 'new',
                   priority: 'major',
                   title: String(error),
                   content: error instanceof Error ? '```javascript\n' + String(error.stack) + '\n```' : ('`' + String(error) + '`')
-                }
+                })
             }, function (err, res) {
                 if (err || !res || res.statusCode >= 400) {
                     console.error(err || ('Something went wrong. (status: ' + res.statusCode + ')'));
