@@ -119,18 +119,29 @@ var rc = require('rc')
         var self
 
         return (self = function (error) {
+            var url = 'https://' + encodeURIComponent(options.username) + ':' + encodeURIComponent(options.password) + '@bitbucket.org/api/1.0/repositories/' + options.repo + '/issues/';
             request({
-                url: 'https://' + encodeURIComponent(options.username) + ':' + encodeURIComponent(options.password) + '@bitbucket.org/api/1.0/repositories/' + options.repo + '/issues/',
-                method: 'POST',
+                url: url,                                        
+                method: 'GET',
                 body: querystring.encode({
-                  status: 'new',
-                  priority: 'major',
-                  title: String(error),
-                  content: error instanceof Error ? '```javascript\n' + String(error.stack) + '\n```' : ('`' + String(error) + '`')
+                    title: String(error)
                 })
-            }, function (err, res) {
-                if (err || !res || res.statusCode >= 400) {
-                    console.error(err || ('Something went wrong. (status: ' + res.statusCode + ')'));
+            }, function (serr, sres, data) {
+                if (!serr && sres && sres.statusCode < 400 && data && JSON.parse(data).issues === 0) {
+                    request({
+                        url: url,
+                        method: 'POST',
+                        body: querystring.encode({
+                            status: 'new',
+                            priority: 'major',
+                            title: String(error),
+                            content: error instanceof Error ? '```javascript\n' + String(error.stack) + '\n```' : ('`' + String(error) + '`')
+                        })
+                    }, function (err, res) {
+                        if (err || !res || res.statusCode >= 400) {
+                            console.error(err || ('Something went wrong. (status: ' + res.statusCode + ')'));
+                        }
+                    })
                 }
             })
 
