@@ -107,6 +107,36 @@ var rc = require('rc')
       }
 
       /**
+       * Open an issue on BitBucket on error.
+       * @public
+       * @method openBBIssue
+       * @params {Object} options - a list of options
+       * @returns {Function} callback - the callback to attach to the error event
+       **/
+    , openBBIssue: function (options) {
+        var self
+
+        return (self = function (error) {
+            request({
+                url: 'https://' + options.username + ':' + options.password + '@bitbucket.org/api/1.0/repositories/' + options.repo + '/issues/',
+                method: 'POST',
+                body: {
+                  status: 'open',
+                  priority: 'major',
+                  title: String(error),
+                  content: error instanceof Error ? '```javascript\n' + String(error.stack) + '\n```' : ('`' + String(error) + '`')
+                }
+            }, function (err, res) {
+                if (err || !res || res.statusCode >= 400) {
+                    console.error(err || ('Something went wrong. (status: ' + res.statusCode + ')'));
+                }
+            })
+
+            return self
+        })
+      }
+
+      /**
        * Create a callback for sending errors as emails.
        * @public
        * @method notify
