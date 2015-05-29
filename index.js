@@ -101,7 +101,7 @@ var rc = require('rc')
 
         /** simply append all error info to the file */
         return (self = function (error) {
-          fs.appendFile(filename, timestamp(error) + '\n')
+          fs.appendFile(filename, timestamp(error) + '\n' + (error instanceof Error ? timestamp(error.stack) + '\n' : ''))
           return self
         })
       }
@@ -131,8 +131,8 @@ var rc = require('rc')
               to: emails
             , from: config.auth.user
             , subject: tc.title || String(error)
-            , text: String(error)
-            , html: '<code><pre>' + String(error) + '</pre></code>'
+            , text: error instanceof Error ? error.stack : error
+            , html: '<code><pre>' + (error instanceof Error ? error.stack : error) + '</pre></code>'
           })
   
           return self
