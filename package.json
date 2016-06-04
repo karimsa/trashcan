@@ -1,6 +1,6 @@
 {
   "name": "trashcan",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "safe error handling in production",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/OHDB/trashcan"
+    "url": "https://github.com/karimsa/trashcan"
   },
   "keywords": [
     "error",
@@ -18,12 +18,12 @@
     "trash",
     "trashcan"
   ],
-  "author": "Online Health Database",
+  "author": "Karim Alibhai",
   "license": "GPL",
   "bugs": {
-    "url": "https://github.com/OHDB/trashcan/issues"
+    "url": "https://github.com/karimsa/trashcan/issues"
   },
-  "homepage": "https://github.com/OHDB/trashcan",
+  "homepage": "https://github.com/karimsa/trashcan",
   "dependencies": {
     "nodemailer": "^1.3.4",
     "rc": "^1.0.1",
