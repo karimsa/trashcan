@@ -201,7 +201,7 @@ var rc = require('rc')
        * @params {EventEmitter} emitter - the event emitter/object to catch errors from
        */
     , catch: function (emitter) {
-        emitter.on('error', tc.throw)
+        emitter.on('error', tc.throw.bind(tc))
         return tc
       }
 
